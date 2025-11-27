@@ -8,9 +8,6 @@ import { useCart } from "../Context/Cart";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Filter, X } from "lucide-react";
 
-// NOTE: Ensure the custom CSS keyframes (animate-fadeInUp, animate-gradient)
-// and styles for 'custom-scrollbar' are defined in your global CSS file (e.g., index.css).
-
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
@@ -25,13 +22,12 @@ const HomePage = () => {
 
   const productsRef = useRef(null);
 
-  // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 40, scale: 0.95 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
   };
 
-  // Fetch categories
+
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
@@ -118,15 +114,12 @@ const HomePage = () => {
   useEffect(() => {
     getAllCategory();
     getTotal();
-
-    // eslint-disable-next-line
   }, []);
 
   // Load more on page change
   useEffect(() => {
     if (page === 1) return;
     loadMore();
-    // eslint-disable-next-line
   }, [page]);
 
   // Reset products if no filter
@@ -135,7 +128,6 @@ const HomePage = () => {
       getAllProducts();
       setPage(1);
     }
-    // eslint-disable-next-line
   }, [checked.length, radio.length]);
 
 
@@ -143,7 +135,6 @@ const HomePage = () => {
     if (checked.length || radio.length) filterProduct();
   }, [checked, radio]);
 
-  // --- Filter Sidebar Component (Internal Helper) ---
   const FilterSidebarContent = ({ isMobile = false, closeDrawer }) => (
     <motion.aside
       initial={!isMobile ? "hidden" : false}
@@ -302,9 +293,6 @@ const HomePage = () => {
 
         {/* Products */}
         <main ref={productsRef} className="md:col-span-4">
-          {/* <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b-4 border-indigo-400 pb-2">
-            Explore Products ({products.length} of {total || '...'})
-          </h2> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <AnimatePresence>
               {products?.map((p, index) => (
